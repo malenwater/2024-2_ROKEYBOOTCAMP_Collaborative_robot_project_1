@@ -3,3 +3,4 @@
 
 ## 테트리스 쌓기
 - 해당 과제는 크기가 다른 블럭을 쌓는 과제입니다.
+  ![Video Preview](video/Tetris.MOV)  
