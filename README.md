@@ -6,6 +6,12 @@
 
 https://github.com/user-attachments/assets/389b7055-1b5c-4868-8d94-4f2702a27293
 
+해당 과제는 DRL(Dosan Robot Language)가 아닌 TaskWriter를 작성하여 만든 블럭을 쌓는 Task입니다. 순서 `147147` 을 입력하면 아래 순서도에 있는
 
-
+  ------------
+  7 8 9   
+  4 5 6   
+  1 2 3   
+  ------------
+블럭을 들어서 옆에 있는 블럭에 쌓도록 설계하였다. 다른 입력값은 받을 수 없다.
 
