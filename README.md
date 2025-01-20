@@ -15,3 +15,8 @@ https://github.com/user-attachments/assets/389b7055-1b5c-4868-8d94-4f2702a27293
   ------------
 블럭을 들어서 옆에 있는 블럭에 쌓도록 설계하였다. 다른 입력값은 받을 수 없다.
 
+## 유성 기어 조립
+- 해당 과제는 3개의 서로 다른 기어 사이에 작은 기어를 넣어 유성 기어를 조립하는 과제이다.
+
+https://github.com/user-attachments/assets/a39daa8a-d8fe-4d30-92f3-6cd0e0cfd857
+
