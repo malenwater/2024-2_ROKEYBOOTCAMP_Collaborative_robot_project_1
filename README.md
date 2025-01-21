@@ -31,9 +31,7 @@ https://github.com/user-attachments/assets/5e090c9a-0d67-4697-be23-5ba23d3ef25e
 
   - 위 영상은 처음 정상 동작한 모션 이후, 주먹을 쥐면 프로그램을 멈추고, 다시 실행할 경우, 블럭을 놓고 다시 집으러 가는 경우와 집은 상태의 경우를 각각 인지해서 일을 계속하도록 만들었다.
 
-
-
-
+https://github.com/user-attachments/assets/619dc0a9-f856-446a-b670-57795f3e90e3
 
   - 위 영상은 잡기 직전 멈추고 실행할 경우, 정상 작동하는 모습이다.
 ### 핵심
