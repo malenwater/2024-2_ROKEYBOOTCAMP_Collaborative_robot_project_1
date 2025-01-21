@@ -43,11 +43,17 @@ https://github.com/user-attachments/assets/619dc0a9-f856-446a-b670-57795f3e90e3
   - 협착 방지 구역 설정 가능 : 정지 모드를 변경
   - 위 3가지 구역을 설정해서 각각 협동작업 구역은 작은 충격에도 로봇이 멈추고, 로봇 속도를 느리게 한다. 공간 제한 구역은 로봇이 일정 구간을 벗어나면 로봇이 멈춘다. 마지막 협착 방지 구역은 작은 충격에도 바로 로봇이 멈추고, 로봇을 움직이게 할 수 있다.
 
+https://github.com/user-attachments/assets/9cdacf8b-b5c2-4140-a0fc-6c8d7de2bae4
 
+![Image](https://github.com/user-attachments/assets/e548b00e-1665-4d08-92c4-26e9128a7fcb)
 
   - 위 영상은 협동 작업 구역에 진입시 속도가 느려지고, 이를 그래프로 확인한 이미지이다.
+
+  https://github.com/user-attachments/assets/bf3af221-81ed-4da8-b8ca-d1a008474e22
   
   - 위 영상은 협동 작업 구역에서 충돌이 날 경우, 로봇이 멈추는 영상이다.
-  
+
+  https://github.com/user-attachments/assets/8fbae5df-0944-4f4a-af0b-ee0e3c379833
+
   - 위 영상은 협착 방지 구역에서 충돌이 날 경우, 로봇이 멈추는 영상이다.
     
