@@ -1,0 +1,30 @@
+
+end = posx(425.03, -148.04, 39.37, 150.98, 179.86, 172.99)
+middle = posx(424.85, -149.85, 60, 65.89, -178.9, 86.89)
+start = posx(424.58, -146.88, 172.3, 157.63, -179.74, 179.52)
+
+movel(start,v=30,acc= 40,ref=DR_BASE)
+movel(middle,v=30,acc= 40, ref=DR_BASE)
+
+
+task_compliance_ctrl() 
+set_stiffnessx([500, 500, 500, 100, 100, 100], time=0.5)
+fd = [0, 0, -10, 0, 0, 10]
+fctrl_dir= [0, 0, 1, 0, 0, 0]
+set_desired_force(fd, dir=fctrl_dir, time=1.0)
+while(True):
+    fcon1 = check_force_condition(DR_AXIS_Z, min=5, ref=DR_WORLD)
+    pos_1 = check_position_condition(DR_AXIS_Z, max=42,ref=DR_BASE)
+    tp_log("pos_1 : {0}".format(pos_1))
+    tp_log("fcon1 : {0}".format(fcon1))
+    if pos_1 == True:
+        tp_log("pos_1 : {0}".format(pos_1))
+        break
+    elif fcon1 == False:
+        amp=[0,0,0, 0,0,5]
+        period=[0,0,0, 0, 0 ,1]
+        move_periodic(amp, period, repeat=5,ref=DR_TOOL)
+ 
+release_force(0.5)
+release_compliance_ctrl()
+tp_log("end")

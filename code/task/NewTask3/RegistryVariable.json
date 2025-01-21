@@ -1,0 +1,21 @@
+{
+  "Count": "3",
+  "Variable0": {
+    "Type": "Registry",
+    "Name": "role",
+    "ValueType": "Integer",
+    "Value": "0"
+  },
+  "Variable1": {
+    "Type": "Registry",
+    "Name": "index",
+    "ValueType": "Integer",
+    "Value": "3"
+  },
+  "Variable2": {
+    "Type": "Registry",
+    "Name": "breaken",
+    "ValueType": "Integer",
+    "Value": "0"
+  }
+}

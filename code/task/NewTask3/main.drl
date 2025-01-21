@@ -1,0 +1,97 @@
+def grep():
+    set_digital_outputs([1,-2])
+    wait_digital_input(1,ON)
+def release():
+    set_digital_outputs([-1,2])
+    wait_digital_input(2,ON)
+
+def release_index():
+    global index
+    index += 1
+    set_digital_outputs([-1,2])
+    wait_digital_input(2,ON)
+set_tool ("Tool",start_time=1,transition_time=2)
+set_tcp("Gripper")
+
+def check_breaken():
+    while (True):
+        if breaken:
+            tp_log("BROKen")
+            exit()
+            break
+        wait(0.1)
+th_id = thread_run(check_breaken, loop=True)
+# Example Data
+cur_pos1 = posx(348.47, -47.22, 35.51, 13.36, -179.19, 12.9)# Teaching pose1
+cur_pos2 = posx(348.48, -149.82, 35.51, 13.38, -179.19, 12.93)
+cur_pos3 = posx(449.12, -149.81, 35.51, 13.32, -179.19, 12.87) # Teaching pose3
+cur_pos4 = posx(449.12, -48.15, 35.51, 13.32, -179.19, 12.87) # Teaching pose4
+
+tar_pos1 = posx(347.58, 152.9, 35.51, 13.38, -179.18, 12.93) # Teaching pose1
+tar_pos2 = posx(347.58, 50.96, 35.52, 13.39, -179.18, 12.94) # Teaching pose2
+tar_pos3 = posx(449.13, 50.19, 35.51, 13.32, -179.19, 12.87) # Teaching pose3
+tar_pos4 = posx(449.11, 152.92, 35.5, 13.33, -179.19, 12.88)
+
+direction = 0 # Normal Pallet -> 0: Snake, 1: Zigzag / Rhombus Pallet -> 2: Snake, 3: Zigzag
+row = 3
+column = 3
+stack = 1
+thickness = 0
+point_offset = [0, 0, 0] # Offset for calculated pose
+
+# Total count
+if direction < 2: # Normal Pallet
+    total_count = row * column * stack
+else: # Rhombus Pallet
+    total_count = (row * column - int(row/2)) * stack
+    
+up_del = [0,0,100,0,0,0]
+curr_posx = get_current_posx(ref=DR_BASE)[0]
+height = 120 - curr_posx[2]
+height_list = [0,0,height,0,0,0]
+tp_log("{}".format(curr_posx))
+v_val = 200
+move_up = trans(curr_posx, height_list, DR_BASE, DR_BASE)
+movel(move_up, vel=v_val, acc=100, ref=DR_BASE,)
+# Calculate Pallet Pose (Resulted in base coordinate)
+if role == 0:
+    for pallet_index in range(index, total_count):
+        Pallet_Pose_1 = get_pattern_point(cur_pos1, cur_pos2, cur_pos3, cur_pos4, pallet_index, direction, row, column, stack, thickness, point_offset)
+        Pallet_Pose_2 = get_pattern_point(tar_pos1, tar_pos2, tar_pos3, tar_pos4,pallet_index, direction, row, column, stack, thickness, point_offset)
+        Pallet_Pose_1_top =  trans(Pallet_Pose_1,up_del,DR_BASE, DR_BASE)
+        Pallet_Pose_2_top = trans(Pallet_Pose_2,up_del,DR_BASE, DR_BASE)
+        move_grap = [Pallet_Pose_1_top,Pallet_Pose_1]
+        #move_target = [Pallet_Pose_1_top,Pallet_Pose_2_top,Pallet_Pose_2]
+        move_out = Pallet_Pose_2_top
+        if get_digital_input(2) or get_digital_input(1) == 0:
+            release()
+            movesx(move_grap,vel=[v_val, v_val], acc=[100, 60],mod=DR_MV_MOD_ABS )
+            tp_log("BROKe")
+            grep()
+            movel(Pallet_Pose_1_top, vel=v_val, acc=100, ref=DR_BASE,)
+        movel(Pallet_Pose_2_top, vel=v_val, acc=100, ref=DR_BASE,)
+        movel(Pallet_Pose_2, vel=v_val, acc=100, ref=DR_BASE,)
+        release_index()
+        movel(move_out,vel=v_val, acc=100,mod=DR_MV_MOD_ABS )
+    index = 0
+    role = 1
+
+for pallet_index in range(index, total_count):
+    Pallet_Pose_1 = get_pattern_point(cur_pos1, cur_pos2, cur_pos3, cur_pos4, pallet_index, direction, row, column, stack, thickness, point_offset)
+    Pallet_Pose_2 = get_pattern_point(tar_pos1, tar_pos2, tar_pos3, tar_pos4,pallet_index, direction, row, column, stack, thickness, point_offset)
+    Pallet_Pose_1_top =  trans(Pallet_Pose_1,up_del,DR_BASE, DR_BASE)
+    Pallet_Pose_2_top = trans(Pallet_Pose_2,up_del,DR_BASE, DR_BASE)
+    move_grap = [Pallet_Pose_2_top ,Pallet_Pose_2]
+    # move_target = [Pallet_Pose_2_top,Pallet_Pose_1_top,Pallet_Pose_1]
+    move_out = Pallet_Pose_1_top
+    if get_digital_input(2) or get_digital_input(1) == 0:
+        movesx(move_grap,vel=[v_val, v_val], acc=[100, 60],mod=DR_MV_MOD_ABS )
+        grep()
+        movel(Pallet_Pose_2_top, vel=v_val, acc=100, ref=DR_BASE,)
+    movel(Pallet_Pose_1_top, vel=v_val, acc=100, ref=DR_BASE,)
+    movel(Pallet_Pose_1, vel=v_val, acc=100, ref=DR_BASE,)
+    release_index()
+    movel(move_out,vel=v_val, acc=100,mod=DR_MV_MOD_ABS )
+
+index = 0
+role = 0
